@@ -2,8 +2,8 @@ using UnityEngine;
 using DG.Tweening;
 
 public class FloorComponent : MonoBehaviour
-
 {
+
     public static FloorComponent Instance;
 
     Vector3 defaultPos = new Vector3(14.1f, -4.8f, 0f);
@@ -12,6 +12,7 @@ public class FloorComponent : MonoBehaviour
     protected string lastran = "red";
 
     string floorColor = "yellow";
+
 
     private void Awake()
     {
@@ -25,6 +26,8 @@ public class FloorComponent : MonoBehaviour
     {
         InvokeRepeating("CreateSingleFloor", 0f, 0.7f);
     }
+
+
     //바닥 한개 생성
     public void CreateSingleFloor()
     {
@@ -60,6 +63,11 @@ public class FloorComponent : MonoBehaviour
             return PoolObjectType.RedFloor;
         }
 
+    }
+
+    public void FloorReset()
+    {
+        CancelInvoke();
     }
 
 }

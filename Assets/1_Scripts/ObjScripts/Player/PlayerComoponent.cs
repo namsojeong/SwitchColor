@@ -74,6 +74,8 @@ public class PlayerComoponent : MonoBehaviour
             if(life<=0)
             {
                 GameManager.Instance.UpdateState(GameState.STANDBY);
+                FloorComponent.Instance.FloorReset();
+                PlayerReset();
             }
         }
     }
@@ -98,5 +100,13 @@ public class PlayerComoponent : MonoBehaviour
             spriteRenderer.color = Color.yellow;
 
         }
+    }
+
+    private void PlayerReset()
+    {
+        transform.position = new Vector3(0f, 3.95f, 0f);
+        colorName = "yellow";
+        spriteRenderer.color = Color.yellow;
+        life = 3;
     }
 }

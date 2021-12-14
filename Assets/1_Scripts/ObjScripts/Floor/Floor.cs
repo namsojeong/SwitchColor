@@ -17,5 +17,7 @@ public class Floor : FloorComponent
         {
             ObjectPool.Instance.ReturnObject(type, gameObject);
         }
+
     }
+
 }
