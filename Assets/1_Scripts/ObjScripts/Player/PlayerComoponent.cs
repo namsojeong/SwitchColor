@@ -79,9 +79,10 @@ public class PlayerComoponent : MonoBehaviour
             GameManager.Instance.life--;
             if(GameManager.Instance.life <=0)
             {
+                UIManager.Instance.OverUPdateUI();
                 PlayerReset();
                 FloorComponent.Instance.FloorReset();
-                GameManager.Instance.UpdateState(GameState.STANDBY);
+                GameManager.Instance.UpdateState(GameState.OVER);
             }
         }
         else

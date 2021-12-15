@@ -14,6 +14,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     Text bestTxt;
 
+    [SerializeField]
+    Text bestOverTxt;
+    [SerializeField]
+    Text scoreOverTxt;
+
     private void Awake()
     {
         Instance = this;
@@ -25,6 +30,12 @@ public class UIManager : MonoBehaviour
         scoreTxt.text = string.Format("SCORE\n{0}", GameManager.Instance.score);
         lifeTxt.text = string.Format("LIFE : {0}", GameManager.Instance.life);
         bestTxt.text = string.Format("BEST SCORE : {0}", GameManager.Instance.bestScore);
+    }
+
+    public void OverUPdateUI()
+    {
+        scoreOverTxt.text = string.Format("SCORE\n{0}", GameManager.Instance.score);
+        bestOverTxt.text = string.Format("BEST SCORE\n{0}", GameManager.Instance.bestScore);
     }
     
 }

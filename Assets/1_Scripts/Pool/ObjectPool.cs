@@ -8,6 +8,8 @@ public class ObjectPool : MonoBehaviour
 
     [SerializeField]
     ObjectPoolData objectPoolData;
+    [SerializeField]
+    GameObject objectPool;
 
     Dictionary<PoolObjectType, Queue<GameObject>> poolObjectMap = new Dictionary<PoolObjectType, Queue<GameObject>>();
 
