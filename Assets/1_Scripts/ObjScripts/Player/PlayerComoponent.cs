@@ -17,7 +17,7 @@ public class PlayerComoponent : MonoBehaviour
 
     SpriteRenderer spriteRenderer;
 
-    int life = 3;
+    
 
     private void Awake()
     {
@@ -26,6 +26,11 @@ public class PlayerComoponent : MonoBehaviour
         {
             CngColor();
         });
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void Update()
@@ -70,14 +75,26 @@ public class PlayerComoponent : MonoBehaviour
     {
         if(collision.tag!=colorName)
         {
-            --life;
-            if(life<=0)
+            Debug.Log(GameManager.Instance.life);
+            GameManager.Instance.life--;
+            if(GameManager.Instance.life <=0)
             {
-                GameManager.Instance.UpdateState(GameState.STANDBY);
-                FloorComponent.Instance.FloorReset();
                 PlayerReset();
+                FloorComponent.Instance.FloorReset();
+                GameManager.Instance.UpdateState(GameState.STANDBY);
             }
         }
+        else
+        {
+            GameManager.Instance.score+=10;
+            if(GameManager.Instance.score>GameManager.Instance.bestScore)
+            {
+                GameManager.Instance.bestScore = GameManager.Instance.score;
+                PlayerPrefs.SetInt("BESTSCORE", GameManager.Instance.bestScore);
+            }
+
+        }
+            UIManager.Instance.UpdateUI();
     }
 
     //플레이어 색 바꾸기
@@ -104,9 +121,11 @@ public class PlayerComoponent : MonoBehaviour
 
     private void PlayerReset()
     {
-        transform.position = new Vector3(0f, 3.95f, 0f);
+        transform.position = new Vector3(3f, 3.95f, 0f);
         colorName = "yellow";
         spriteRenderer.color = Color.yellow;
-        life = 3;
+        GameManager.Instance.life = 3;
+        GameManager.Instance.score = 0;
+        UIManager.Instance.UpdateUI();
     }
 }

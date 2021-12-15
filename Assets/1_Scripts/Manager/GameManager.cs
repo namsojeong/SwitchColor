@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
 
     private List<Component> components = new List<Component>();
 
+    public int life = 3;
+    public int score = 0;
+    public int bestScore = 0;
+
+
     private void Awake()
     {
         Screen.SetResolution(2960, 1440, false);
@@ -18,6 +23,12 @@ public class GameManager : MonoBehaviour
 
         components.Add(new UIComponent());
         UpdateState(GameState.INIT);
+        bestScore = PlayerPrefs.GetInt("BESTSCORE", 0);
+    }
+
+    private void Start()
+    {
+        
     }
     public void UpdateState(GameState state)
     {

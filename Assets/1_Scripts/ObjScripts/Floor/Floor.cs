@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Floor : FloorComponent
+public class Floor : MonoBehaviour
 {
     [SerializeField]
     PoolObjectType type;

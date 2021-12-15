@@ -1,5 +1,7 @@
 using UnityEngine;
+using System;
 using DG.Tweening;
+using System.Collections;
 
 public class FloorComponent : MonoBehaviour
 {
@@ -13,33 +15,31 @@ public class FloorComponent : MonoBehaviour
 
     string floorColor = "yellow";
 
+    const string func = "CreateSingleFloor";
 
     private void Awake()
     {
         Instance = this;
-        if(Instance==null)
-        {
-            Instance = GetComponent<FloorComponent>();
-        }
     }
+
     public void StartRun()
     {
-        InvokeRepeating("CreateSingleFloor", 0f, 0.7f);
+        Debug.Log("시작");
+        InvokeRepeating(func, 0f, 0.7f);
     }
 
 
     //바닥 한개 생성
-    public void CreateSingleFloor()
+    void CreateSingleFloor()
     {
         GameObject floor = ObjectPool.Instance.GetObject(GetRandomType());
         floor.transform.position = defaultPos;
-
     }
 
     //바닥 색 타입 정하기
     protected PoolObjectType GetRandomType()
     {
-            ranFloor = Random.Range(0, 101);
+            ranFloor = UnityEngine.Random.Range(0, 101);
         lastran = floorColor;
         if (ranFloor >= 70)
         {
@@ -67,7 +67,8 @@ public class FloorComponent : MonoBehaviour
 
     public void FloorReset()
     {
-        CancelInvoke();
+        Debug.Log("D");
+        CancelInvoke(func);
     }
 
 }
