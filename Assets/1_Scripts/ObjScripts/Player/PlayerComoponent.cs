@@ -120,7 +120,7 @@ public class PlayerComoponent : MonoBehaviour
         }
     }
 
-    private void PlayerReset()
+    public void PlayerReset()
     {
         transform.position = new Vector3(3f, 3.95f, 0f);
         colorName = "yellow";

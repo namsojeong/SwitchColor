@@ -13,7 +13,7 @@ public class Floor : MonoBehaviour
     bool isDead = false;
     private void Update()
     {
-        if(GameManager.Instance.state==GameState.OVER)
+        if(GameManager.Instance.state==GameState.OVER || GameManager.Instance.state == GameState.STANDBY)
         {
             isDead = true;
             ObjectPool.Instance.ReturnObject(type, gameObject);

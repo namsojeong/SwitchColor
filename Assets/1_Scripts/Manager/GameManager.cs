@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
     public void UpdateState(GameState state)
     {
         this.state = state;
@@ -44,6 +45,22 @@ public class GameManager : MonoBehaviour
             UpdateState(GameState.STANDBY);
         }
     }
-
+    public void UpdateSts(string state)
+    {
+        if(state=="STANDBY")
+        {
+            FloorComponent.Instance.FloorReset();
+            UpdateState(GameState.STANDBY);
+        }
+        else if(state=="RUNNING")
+        {
+            FloorComponent.Instance.StartRun();
+            UpdateState(GameState.RUNNING);
+        }
+        else
+        {
+            UpdateState(GameState.OVER);
+        }
+    }
 
 }
