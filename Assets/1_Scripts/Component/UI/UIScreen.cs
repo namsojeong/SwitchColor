@@ -11,6 +11,7 @@ public class UIScreen : MonoBehaviour
     [SerializeField]
     protected GameObject screenObj;
 
+    //스크린 상태 (끄고 키기)
     public virtual void UpdateScreenStatus(bool open)
     {
         canvasGroup.alpha = open ? 1 : 0;
@@ -18,5 +19,6 @@ public class UIScreen : MonoBehaviour
         canvasGroup.interactable = open;
         screenObj.gameObject.SetActive(open);
     }
+
 
 }

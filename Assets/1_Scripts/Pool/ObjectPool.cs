@@ -30,6 +30,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    //오브젝트 생성 해놓기
     private GameObject CreateNewObject(int index)
     {
         var newObj = Instantiate(objectPoolData.prefabs[index]);
@@ -38,6 +39,7 @@ public class ObjectPool : MonoBehaviour
         return newObj;
     }
 
+    //생성 (가져오기)
     public GameObject GetObject(PoolObjectType type)
     {
         if (Instance.poolObjectMap[type].Count > 0)
@@ -57,6 +59,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    //오브젝트 리턴
     public void ReturnObject(PoolObjectType type, GameObject obj)
     {
         switch (obj.tag)

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerComoponent : MonoBehaviour
 {
+
     [SerializeField]
     Button colorButton;
 
@@ -12,6 +13,8 @@ public class PlayerComoponent : MonoBehaviour
 
     private bool left;
     private bool right;
+
+    bool isDamage = false;
 
     string colorName = "yellow";
 
@@ -24,13 +27,9 @@ public class PlayerComoponent : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         colorButton.onClick.AddListener(() =>
         {
+            ButtonColorChange();
             CngColor();
         });
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void Update()
@@ -53,7 +52,7 @@ public class PlayerComoponent : MonoBehaviour
         this.transform.position = Camera.main.ViewportToWorldPoint(pos);
     }
 
-    //이동 제어
+    //이동 확인 및 제어
     public void LeftDown()
     {
         left = true;
@@ -71,19 +70,27 @@ public class PlayerComoponent : MonoBehaviour
         right = false;
     }
 
+    //플레이어 충돌 시
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (UIManager.Instance.isSetting) return; //설정창이 켜있으면 무시
+
+        //바닥 색과 같은지 판단
         if(collision.tag!=colorName)
         {
-            Debug.Log(GameManager.Instance.life);
+            if (isDamage) return;
+            isDamage = true;
             GameManager.Instance.life--;
+            StartCoroutine(LifeMin());
             if(GameManager.Instance.life <=0)
             {
                 UIManager.Instance.OverUPdateUI();
                 PlayerReset();
                 FloorComponent.Instance.FloorReset();
+                SoundManager.Instance.SoundOn("BGM", 1);
                 GameManager.Instance.UpdateState(GameState.OVER);
             }
+            StopCoroutine(LifeMin());
         }
         else
         {
@@ -95,7 +102,9 @@ public class PlayerComoponent : MonoBehaviour
             }
 
         }
-            UIManager.Instance.UpdateUI();
+
+        UIManager.Instance.UpdateUI();
+
     }
 
     //플레이어 색 바꾸기
@@ -120,6 +129,7 @@ public class PlayerComoponent : MonoBehaviour
         }
     }
 
+    //플레이어 위치와 색 정보 리셋
     public void PlayerReset()
     {
         transform.position = new Vector3(3f, 3.95f, 0f);
@@ -128,5 +138,29 @@ public class PlayerComoponent : MonoBehaviour
         GameManager.Instance.life = 3;
         GameManager.Instance.score = 0;
         UIManager.Instance.UpdateUI();
+    }
+
+    //라이프 감소 이펙트
+    private IEnumerator LifeMin()
+    {
+        for(int i=0;i<5;i++)
+        {
+        spriteRenderer.enabled=false;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.enabled=true;
+        yield return new WaitForSeconds(0.2f);
+        }
+        isDamage = false;
+    }
+
+    //색 바꾸는 버튼 클릭 시 버튼 색 바뀌기
+    void ButtonColorChange()
+    {
+        if(colorName=="red")
+        colorButton.GetComponent<Image>().color = Color.yellow;
+        else if(colorName=="yellow")
+        colorButton.GetComponent<Image>().color = Color.green;
+        else if(colorName=="green")
+        colorButton.GetComponent<Image>().color = Color.red;
     }
 }

@@ -11,7 +11,6 @@ public class FloorComponent : MonoBehaviour
     Vector3 defaultPos = new Vector3(14.1f, -4.8f, 0f);
 
     int ranFloor = 1;
-    protected string lastran = "red";
 
     string floorColor = "yellow";
 
@@ -22,12 +21,11 @@ public class FloorComponent : MonoBehaviour
         Instance = this;
     }
 
+    //RUNNING 시작
     public void StartRun()
     {
-        Debug.Log("시작");
         InvokeRepeating(func, 0f, 0.7f);
     }
-
 
     //바닥 한개 생성
     void CreateSingleFloor()
@@ -36,11 +34,10 @@ public class FloorComponent : MonoBehaviour
         floor.transform.position = defaultPos;
     }
 
-    //바닥 색 타입 정하기
+    //바닥 색 정하기
     protected PoolObjectType GetRandomType()
     {
-            ranFloor = UnityEngine.Random.Range(0, 101);
-        lastran = floorColor;
+        ranFloor = UnityEngine.Random.Range(0, 101);
         if (ranFloor >= 70)
         {
             floorColor = "red";
@@ -65,9 +62,9 @@ public class FloorComponent : MonoBehaviour
 
     }
 
+    //생성 멈추기
     public void FloorReset()
     {
-        Debug.Log("D");
         CancelInvoke(func);
     }
 

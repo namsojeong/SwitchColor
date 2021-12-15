@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private List<Component> components = new List<Component>();
 
+    //User 인게임 정보
     public int life = 3;
     public int score = 0;
     public int bestScore = 0;
@@ -22,15 +23,15 @@ public class GameManager : MonoBehaviour
         Instance = this;
 
         components.Add(new UIComponent());
+
         UpdateState(GameState.INIT);
+
         bestScore = PlayerPrefs.GetInt("BESTSCORE", 0);
+
+        SoundManager.Instance.SoundOn("BGM", 0);
     }
 
-    private void Start()
-    {
-        
-    }
-
+    //씬 바꾸기
     public void UpdateState(GameState state)
     {
         this.state = state;
@@ -45,11 +46,14 @@ public class GameManager : MonoBehaviour
             UpdateState(GameState.STANDBY);
         }
     }
+
+    //인스펙터 창에서 씬 바꾸기
     public void UpdateSts(string state)
     {
         if(state=="STANDBY")
         {
             FloorComponent.Instance.FloorReset();
+            SoundManager.Instance.SoundOn("BGM", 0);
             UpdateState(GameState.STANDBY);
         }
         else if(state=="RUNNING")
@@ -59,6 +63,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            SoundManager.Instance.SoundOn("BGM", 1);
             UpdateState(GameState.OVER);
         }
     }
