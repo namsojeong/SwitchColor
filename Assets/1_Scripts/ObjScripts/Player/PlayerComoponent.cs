@@ -74,7 +74,8 @@ public class PlayerComoponent : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (UIManager.Instance.isSetting) return; //설정창이 켜있으면 무시
-
+        Debug.Log(isDamage);
+        Debug.Log(collision.tag);
         //바닥 색과 같은지 판단
         if(collision.tag!=colorName)
         {
@@ -91,6 +92,7 @@ public class PlayerComoponent : MonoBehaviour
                 GameManager.Instance.UpdateState(GameState.OVER);
             }
             StopCoroutine(LifeMin());
+        isDamage = false;
         }
         else
         {
@@ -102,6 +104,7 @@ public class PlayerComoponent : MonoBehaviour
             }
 
         }
+
 
         UIManager.Instance.UpdateUI();
 
@@ -133,10 +136,12 @@ public class PlayerComoponent : MonoBehaviour
     public void PlayerReset()
     {
         transform.position = new Vector3(3f, 3.95f, 0f);
+        spriteRenderer.enabled = true;
         colorName = "yellow";
         spriteRenderer.color = Color.yellow;
         GameManager.Instance.life = 3;
         GameManager.Instance.score = 0;
+        colorButton.GetComponent<Image>().color = Color.red;
         UIManager.Instance.UpdateUI();
     }
 
@@ -150,7 +155,6 @@ public class PlayerComoponent : MonoBehaviour
         spriteRenderer.enabled=true;
         yield return new WaitForSeconds(0.2f);
         }
-        isDamage = false;
     }
 
     //색 바꾸는 버튼 클릭 시 버튼 색 바뀌기

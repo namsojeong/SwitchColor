@@ -26,11 +26,14 @@ public class GameManager : MonoBehaviour
 
         UpdateState(GameState.INIT);
 
-        bestScore = PlayerPrefs.GetInt("BESTSCORE", 0);
 
-        SoundManager.Instance.SoundOn("BGM", 0);
     }
-
+    private void Start()
+    {
+        bestScore = PlayerPrefs.GetInt("BESTSCORE", 0);
+        SoundManager.Instance.SoundOn("BGM", 0);
+        
+    }
     //¾À ¹Ù²Ù±â
     public void UpdateState(GameState state)
     {
@@ -61,10 +64,15 @@ public class GameManager : MonoBehaviour
             FloorComponent.Instance.StartRun();
             UpdateState(GameState.RUNNING);
         }
-        else
+        else if(state=="OVER")
         {
             SoundManager.Instance.SoundOn("BGM", 1);
             UpdateState(GameState.OVER);
+        }
+        else if(state=="SHOP")
+        {
+            UpdateState(GameState.SHOP);
+
         }
     }
 

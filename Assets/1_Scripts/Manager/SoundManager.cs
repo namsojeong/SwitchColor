@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager Instance;
+    public static SoundManager Instance=null;
 
     [Header("SFX")]
     [SerializeField]
@@ -27,6 +27,8 @@ public class SoundManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        if (Instance == null)
+            Instance = GetComponent<SoundManager>();
     }
 
     public void ClickSound(int num)
