@@ -8,6 +8,8 @@ public class StandbyScreen : UIScreen
     [Header("UI ¹öÆ°")]
     [SerializeField]
     Button startButton;
+    [SerializeField]
+    Button shopButton;
 
     private void Awake()
     {
@@ -17,6 +19,7 @@ public class StandbyScreen : UIScreen
             FloorComponent.Instance.StartRun();
         });
 
+        shopButton.onClick.AddListener(() => GameManager.Instance.UpdateState(GameState.SHOP));
     }
     public override void UpdateScreenStatus(bool open)
     {

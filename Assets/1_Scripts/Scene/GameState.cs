@@ -7,6 +7,6 @@ public enum GameState
     INIT,
     STANDBY,
     RUNNING,
-    SHOP,
-    OVER
+    OVER,
+    SHOP
 }

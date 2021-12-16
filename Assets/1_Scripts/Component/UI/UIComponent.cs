@@ -11,8 +11,8 @@ public class UIComponent : Component
     {
         this.screens.Add(GameObject.Find("StandByScreen").GetComponent<UIScreen>());
         this.screens.Add(GameObject.Find("RunningScreen").GetComponent<UIScreen>());
-        this.screens.Add(GameObject.Find("ShopScreen").GetComponent<UIScreen>());
         this.screens.Add(GameObject.Find("OverScreen").GetComponent<UIScreen>());
+        this.screens.Add(GameObject.Find("ShopScreen").GetComponent<UIScreen>());
     }
 
     //¾À Start
