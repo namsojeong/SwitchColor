@@ -16,7 +16,7 @@ public class StandbyScreen : UIScreen
         //플레이버튼
         startButton.onClick.AddListener(()=> {
             GameManager.Instance.UpdateState(GameState.RUNNING);
-            FloorComponent.Instance.StartRun();
+            ObjComponent.Instance.StartRun();
         });
 
         shopButton.onClick.AddListener(() => GameManager.Instance.UpdateState(GameState.SHOP));

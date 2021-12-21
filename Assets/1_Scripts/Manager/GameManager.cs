@@ -56,13 +56,14 @@ public class GameManager : MonoBehaviour
     {
         if(state=="STANDBY")
         {
-            FloorComponent.Instance.FloorReset();
+            ObjComponent.Instance.FloorReset();
+            ObjComponent.Instance.ItemReset();
             SoundManager.Instance.SoundOn("BGM", 0);
             UpdateState(GameState.STANDBY);
         }
         else if(state=="RUNNING")
         {
-            FloorComponent.Instance.StartRun();
+            ObjComponent.Instance.StartRun();
             UpdateState(GameState.RUNNING);
         }
         else if(state=="OVER")

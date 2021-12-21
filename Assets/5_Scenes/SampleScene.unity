@@ -2573,7 +2573,9 @@ MonoBehaviour:
     - {fileID: 8862327038540270311, guid: 3ca2b054cbc1b3a4a8c124636ce024d6, type: 3}
     - {fileID: 8862327038540270311, guid: 23a13285925bae1458709a04ad1c0bc8, type: 3}
     - {fileID: 8862327038540270311, guid: ef0c16d055f81384c8ef90b2c3284782, type: 3}
-    prefabsCounts: 050000000500000005000000
+    - {fileID: 1952937590224604429, guid: f3b3f2b2dc95f824fbeffc21da1412b0, type: 3}
+    - {fileID: 1308642389698175672, guid: c1729e239a22e8d489f471dd8a991311, type: 3}
+    prefabsCounts: 0500000005000000050000000500000005000000
   objectPool: {fileID: 0}
 --- !u!4 &995795565
 Transform:
@@ -3394,7 +3396,7 @@ GameObject:
   - component: {fileID: 1257999842}
   - component: {fileID: 1257999843}
   m_Layer: 5
-  m_Name: FloorComponent
+  m_Name: ObjManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3428,7 +3430,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1257999841}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c35e01913927d649b43f5bd113b0dfb, type: 3}
+  m_Script: {fileID: 11500000, guid: 87fc8b3eaf4e7594dbbbedaf423cf2f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1280300225
@@ -3847,7 +3849,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sfxSource: {fileID: 1442081240}
-  sfxSound: []
+  sfxSound:
+  - {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
+  - {fileID: 8300000, guid: 5039414d94a6e4e70a5ab9e8833e992a, type: 3}
   clickSource: {fileID: 585411606}
   clickSound:
   - {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
