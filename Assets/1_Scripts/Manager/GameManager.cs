@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     private List<Component> components = new List<Component>();
 
+    public bool isOver = false;
+
     //User 인게임 정보
     public int life = 3;
     public int score = 0;

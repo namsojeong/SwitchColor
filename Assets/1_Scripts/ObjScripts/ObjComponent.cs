@@ -22,7 +22,7 @@ public class ObjComponent : MonoBehaviour
     public void StartRun()
     {
         InvokeRepeating("CreateSingleFloor", 0f, 0.7f);
-        InvokeRepeating("CreateSingleItem", 0f, 1f);
+        InvokeRepeating("CreateSingleItem", 0f, 5f);
     }
 
     //바닥 한개 생성
@@ -34,7 +34,9 @@ public class ObjComponent : MonoBehaviour
     
     void CreateSingleItem()
     {
+        Vector2 ranPos = new Vector2(Random.Range(-10, 10), Random.Range(-4, 4));
         GameObject item = ObjectPool.Instance.GetObject(GetRandomTypeItem());
+        item.transform.position = ranPos;
     }
 
     //바닥 색 정하기

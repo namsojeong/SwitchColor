@@ -8,8 +8,16 @@ public class PlayerComoponent : MonoBehaviour
 
     [SerializeField]
     Button colorButton;
+    [SerializeField]
+    Button retryButton;
+    [SerializeField]
+    Text rewardTxt;
+
+    [SerializeField]
+    GameObject overPanel;
 
     float speed = 10f;
+    int reward = 5;
 
     private bool left;
     private bool right;
@@ -29,6 +37,17 @@ public class PlayerComoponent : MonoBehaviour
         {
             ButtonColorChange();
             CngColor();
+        });
+        retryButton.onClick.AddListener(() =>
+        {
+            reward = 5;
+            CancelInvoke("reTimer");
+            isDamage = true;
+            GameManager.Instance.life = 3;
+            UIManager.Instance.UpdateUI();
+            overPanel.SetActive(false);
+            GameManager.Instance.isOver = false;
+            isDamage = false;
         });
     }
 
@@ -73,6 +92,7 @@ public class PlayerComoponent : MonoBehaviour
     //플레이어 충돌 시
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (GameManager.Instance.isOver) return; 
         if (UIManager.Instance.isSetting) return; //설정창이 켜있으면 무시
         //바닥 색과 같은지 판단
         if (collision.tag == colorName)
@@ -83,17 +103,17 @@ public class PlayerComoponent : MonoBehaviour
                 GameManager.Instance.bestScore = GameManager.Instance.score;
                 PlayerPrefs.SetInt("BESTSCORE", GameManager.Instance.bestScore);
             }
-            
+
         }
-        else if(collision.tag=="heart")
+        else if (collision.tag == "heart")
         {
             if (GameManager.Instance.life >= 3)
                 GameManager.Instance.life = 3;
             else
-            GameManager.Instance.life++;
+                GameManager.Instance.life++;
 
         }
-        else if(collision.tag=="star")
+        else if (collision.tag == "star")
         {
             GameManager.Instance.score += 30;
             if (GameManager.Instance.score > GameManager.Instance.bestScore)
@@ -110,20 +130,45 @@ public class PlayerComoponent : MonoBehaviour
             StartCoroutine(LifeMin());
             if (GameManager.Instance.life <= 0)
             {
-                UIManager.Instance.OverUPdateUI();
-                PlayerReset();
-                ObjComponent.Instance.FloorReset();
-                ObjComponent.Instance.ItemReset();
-                SoundManager.Instance.SoundOn("BGM", 1);
-                GameManager.Instance.UpdateState(GameState.OVER);
+                GameManager.Instance.isOver = true;
+                InvokeRepeating("reTimer", 0f, 1f);
+                overPanel.SetActive(true);
+                
             }
+            else
+            {
             SoundManager.Instance.SoundOn("SFX", 1);
             StopCoroutine(LifeMin());
             isDamage = false;
+
+            }
         }
         UIManager.Instance.UpdateUI();
     }
-
+    void reTimer()
+    {
+        rewardTxt.text = string.Format("{0}", reward);
+        reward--;
+        Debug.Log("D");
+        if (reward < 0)
+        {
+            reward = 5;
+            CancelInvoke("reTimer");
+            GameOverFun();
+        }
+    }
+    void GameOverFun()
+    {
+        GameManager.Instance.isOver = false;
+        isDamage = false;
+        overPanel.SetActive(false);
+        GameManager.Instance.UpdateState(GameState.OVER);
+        UIManager.Instance.OverUPdateUI();
+        PlayerReset();
+        ObjComponent.Instance.FloorReset();
+        ObjComponent.Instance.ItemReset();
+        SoundManager.Instance.SoundOn("BGM", 1);
+    }
     //플레이어 색 바꾸기
     public void CngColor()
     {

@@ -5,23 +5,61 @@ using UnityEngine.Advertisements;
 
 public class Advertise : MonoBehaviour
 {
-    const string gameID = "4283527";
-
     private void Start()
     {
-        Advertisement.Initialize(gameID);
+        string gameId = null;
+
+#if UNITY_ANDROID
+        gameId = "4283527";
+#elif UNITY_IOS
+             gameId = 4283526;
+#endif
+
+        if (Advertisement.isSupported && !Advertisement.isInitialized)
+        {
+            Advertisement.Initialize(gameId);
+        }
+
     }
     //전면광고
     public void ShowAd()
     {
         if (Advertisement.IsReady())
         {
-            Debug.Log("돼");
-            Advertisement.Show("video");
+            Advertisement.Show("Interstitial_Android");
+        }
+    }
+
+    //reward광고
+    public void ShowRewardAd()
+    {
+        if (Advertisement.IsReady())
+        {
+            ShowOptions options = new ShowOptions { resultCallback = ResultAds };
+            Advertisement.Show("Rewarded_Android", options);
         }
         else
         {
-            Debug.Log("안돼");
+            Debug.Log("광고를 시작하지 못했습니다.");
+        }
+    }
+
+    void ResultAds(ShowResult result)
+    {
+        switch (result)
+        {
+            case ShowResult.Failed:
+                Debug.Log("광고 보기에 실패했습니다.");
+                break;
+            case ShowResult.Skipped:
+                Debug.Log("광고를 스킵했습니다.");
+                break;
+            case ShowResult.Finished:
+                // 광고 보기 보상 기능 
+                
+
+                Debug.Log("광고 보기를 완료했습니다.");
+                break;
         }
     }
 }
