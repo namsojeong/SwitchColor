@@ -17,6 +17,10 @@ public class UIManager : MonoBehaviour
 
     [Header("게임오버 UI Text")]
     [SerializeField]
+    Button deadButton;
+    [SerializeField]
+    GameObject overPanel;
+    [SerializeField]
     Text bestOverTxt;
     [SerializeField]
     Text scoreOverTxt;
@@ -37,6 +41,40 @@ public class UIManager : MonoBehaviour
         Instance = this;
         if (Instance == null)
             Instance = GetComponent<UIManager>();
+
+        deadButton.onClick.AddListener(() =>
+        {
+            Dead();
+        });
+    }
+
+    //광고 후 보상목숨
+    public void ReStart()
+    {
+        GameManager.Instance.life = 3;
+        UpdateUI();
+        overPanel.SetActive(false);
+        GameManager.Instance.isOver = false;
+        InvokeRepeating("Timer", 0f, 1f);
+        
+    }
+
+    //그냥 죽기
+    public void Dead()
+    {
+        overPanel.SetActive(false);
+        GameManager.Instance.isOver = false;
+        OverUPdateUI();
+        GameManager.Instance.UpdateState(GameState.OVER);
+        ObjComponent.Instance.ReZero();
+        SoundManager.Instance.SoundOn("BGM", 1);
+    }
+
+    //죽고 UI 띄우기
+    public void OverUI()
+    {
+        GameManager.Instance.isOver = true;
+        overPanel.SetActive(true);
     }
 
     //인게임 스코어 + 라이프 UI Update
@@ -66,7 +104,6 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.Instance.state == GameState.RUNNING)
         {
-            settingImg.SetActive(false);
             InvokeRepeating("Timer", 0f, 1f);
         }
         else
@@ -78,6 +115,8 @@ public class UIManager : MonoBehaviour
     //Continue 후 카운트다운
     void Timer()
     {
+            settingP.SetActive(true);
+            settingImg.SetActive(false);
         timeTxt.text = string.Format("{0}", time);
         time--;
         if(time<0)
@@ -86,6 +125,8 @@ public class UIManager : MonoBehaviour
             time = 3;
             settingImg.SetActive(true);
             settingP.SetActive(false);
+            GameManager.Instance.isAd = false;
+            CancelInvoke("Timer");
         }
     }
 

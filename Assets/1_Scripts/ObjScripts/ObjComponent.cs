@@ -21,6 +21,7 @@ public class ObjComponent : MonoBehaviour
     //RUNNING 시작
     public void StartRun()
     {
+        GameManager.Instance.score = 0;
         InvokeRepeating("CreateSingleFloor", 0f, 0.7f);
         InvokeRepeating("CreateSingleItem", 0f, 5f);
     }
@@ -34,6 +35,9 @@ public class ObjComponent : MonoBehaviour
     
     void CreateSingleItem()
     {
+        if (UIManager.Instance.isSetting) return;
+        if (GameManager.Instance.isAd) return;
+        if (GameManager.Instance.isOver) return;
         Vector2 ranPos = new Vector2(Random.Range(-10, 10), Random.Range(-4, 4));
         GameObject item = ObjectPool.Instance.GetObject(GetRandomTypeItem());
         item.transform.position = ranPos;
@@ -82,13 +86,19 @@ public class ObjComponent : MonoBehaviour
     }
 
     //생성 멈추기
-    public void FloorReset()
+    private void FloorReset()
     {
         CancelInvoke("CreateSingleFloor");
     }
-    public void ItemReset()
+    private void ItemReset()
     {
         CancelInvoke("CreateSingleItem");
 
+    }
+
+    public void ReZero()
+    {
+        FloorReset();
+        ItemReset();
     }
 }

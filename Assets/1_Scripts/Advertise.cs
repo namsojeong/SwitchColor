@@ -33,6 +33,7 @@ public class Advertise : MonoBehaviour
     //reward광고
     public void ShowRewardAd()
     {
+        GameManager.Instance.isAd = true;
         if (Advertisement.IsReady())
         {
             ShowOptions options = new ShowOptions { resultCallback = ResultAds };
@@ -50,14 +51,19 @@ public class Advertise : MonoBehaviour
         {
             case ShowResult.Failed:
                 Debug.Log("광고 보기에 실패했습니다.");
+                UIManager.Instance.Dead();
+                GameManager.Instance.isAd = false;
+
                 break;
             case ShowResult.Skipped:
                 Debug.Log("광고를 스킵했습니다.");
+                UIManager.Instance.Dead();
+                GameManager.Instance.isAd = false;
+
                 break;
             case ShowResult.Finished:
                 // 광고 보기 보상 기능 
-                
-
+                UIManager.Instance.ReStart();
                 Debug.Log("광고 보기를 완료했습니다.");
                 break;
         }

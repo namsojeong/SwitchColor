@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private List<Component> components = new List<Component>();
 
     public bool isOver = false;
+    public bool isAd = false;
 
     //User 인게임 정보
     public int life = 3;
@@ -58,13 +59,12 @@ public class GameManager : MonoBehaviour
     {
         if(state=="STANDBY")
         {
-            ObjComponent.Instance.FloorReset();
-            ObjComponent.Instance.ItemReset();
             SoundManager.Instance.SoundOn("BGM", 0);
             UpdateState(GameState.STANDBY);
         }
         else if(state=="RUNNING")
         {
+            ObjComponent.Instance.ReZero();
             ObjComponent.Instance.StartRun();
             UpdateState(GameState.RUNNING);
         }

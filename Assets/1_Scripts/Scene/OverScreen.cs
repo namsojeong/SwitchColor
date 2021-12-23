@@ -18,6 +18,7 @@ public class OverScreen : UIScreen
         //다시도전 버튼 터치 시
         retryButton.onClick.AddListener(() => {
             GameManager.Instance.UpdateState(GameState.RUNNING);
+            UIManager.Instance.UpdateUI();
             ObjComponent.Instance.StartRun();
         });
 
