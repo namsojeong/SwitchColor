@@ -12,6 +12,7 @@ public class HeartItem : MonoBehaviour
     {
         if (GameManager.Instance.state == GameState.OVER || GameManager.Instance.state == GameState.STANDBY)
         {
+            GameManager.Instance.itemCount = 0;
             ObjectPool.Instance.ReturnObject(type, gameObject);
         }
     }
@@ -20,6 +21,7 @@ public class HeartItem : MonoBehaviour
     {
         if(collision.tag=="Player")
         {
+            GameManager.Instance.itemCount--;
             SoundManager.Instance.SoundOn("SFX", 0);
             ObjectPool.Instance.ReturnObject(type, gameObject);
         }

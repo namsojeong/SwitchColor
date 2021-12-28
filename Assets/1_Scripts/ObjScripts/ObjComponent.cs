@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjComponent : MonoBehaviour
 {
     public static ObjComponent Instance;
+
     private void Awake()
     {
         Instance = this;
@@ -22,7 +23,7 @@ public class ObjComponent : MonoBehaviour
     public void StartRun()
     {
         GameManager.Instance.score = 0;
-        InvokeRepeating("CreateSingleFloor", 0f, 0.7f);
+        InvokeRepeating("CreateSingleFloor", 0f, 1.062f);
         InvokeRepeating("CreateSingleItem", 0f, 5f);
     }
 
@@ -35,9 +36,8 @@ public class ObjComponent : MonoBehaviour
     
     void CreateSingleItem()
     {
-        if (UIManager.Instance.isSetting) return;
-        if (GameManager.Instance.isAd) return;
-        if (GameManager.Instance.isOver) return;
+        if (UIManager.Instance.isSetting || GameManager.Instance.isAd || GameManager.Instance.isOver || GameManager.Instance.itemCount>=3) return;
+        GameManager.Instance.itemCount++;
         Vector2 ranPos = new Vector2(Random.Range(-10, 10), Random.Range(-4, 4));
         GameObject item = ObjectPool.Instance.GetObject(GetRandomTypeItem());
         item.transform.position = ranPos;
@@ -88,17 +88,13 @@ public class ObjComponent : MonoBehaviour
     //»ý¼º ¸ØÃß±â
     private void FloorReset()
     {
+        GameManager.Instance.itemCount = 0;
         CancelInvoke("CreateSingleFloor");
-    }
-    private void ItemReset()
-    {
         CancelInvoke("CreateSingleItem");
-
     }
 
     public void ReZero()
     {
         FloorReset();
-        ItemReset();
     }
 }

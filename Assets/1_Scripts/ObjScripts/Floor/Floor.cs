@@ -9,7 +9,7 @@ public class Floor : MonoBehaviour
     [SerializeField]
     PoolObjectType type;
 
-    float speed = 10.69f;
+    float speed = 9f;
 
     private void Update()
     {

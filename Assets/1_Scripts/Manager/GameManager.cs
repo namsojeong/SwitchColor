@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public bool isOver = false;
     public bool isAd = false;
+    public int itemCount=0;
 
     //User 인게임 정보
     public int life = 3;
